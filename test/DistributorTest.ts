@@ -24,7 +24,7 @@ describe("Distributor", async () => {
     it("Should distribute tokens to multiple receivers", async () => {
         const { distributor, token } = await networkHelpers.loadFixture(deployFixtures);
 
-        await distributor.write.distribute([
+        await distributor.write.distributeERC20([
             token.address,
             [alice.account.address, bob.account.address],
             [amountForAlice, amountForBob]
@@ -41,7 +41,7 @@ describe("Distributor", async () => {
         await token.write.approve([distributor.address, totalAmount - 1n]);
 
         await viem.assertions.revertWith(
-            distributor.write.distribute([
+            distributor.write.distributeERC20([
                 token.address,
                 [alice.account.address, bob.account.address],
                 [amountForAlice, amountForBob]
@@ -54,7 +54,7 @@ describe("Distributor", async () => {
         const { distributor, token } = await networkHelpers.loadFixture(deployFixtures);
 
         await viem.assertions.revertWithCustomError(
-            distributor.write.distribute([
+            distributor.write.distributeERC20([
                 token.address,
                 [alice.account.address, bob.account.address],
                 [amountForAlice, amountForBob]

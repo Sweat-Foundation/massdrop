@@ -17,7 +17,11 @@ contract Distributor is Ownable {
   /// @param _token The address of the ERC-20 token to distribute.
   /// @param _receivers An array of addresses to receive the tokens.
   /// @param _amounts An array of amounts to be sent to each corresponding receiver.
-  function distribute(address _token, address[] calldata _receivers, uint256[] calldata _amounts) external onlyOwner {
+  function distributeERC20(
+    address _token,
+    address[] calldata _receivers,
+    uint256[] calldata _amounts
+  ) external onlyOwner {
     require(_receivers.length == _amounts.length, "Receivers and amounts must have the same length");
     require(_receivers.length > 0, "Receivers must not be empty");
     require(_amounts.length > 0, "Amounts must not be empty");
