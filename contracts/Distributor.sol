@@ -57,9 +57,9 @@ contract Distributor is Ownable {
   }
 
   modifier validDistributionArgs(address[] calldata _receivers, uint256[] calldata _amounts) {
-    require(_receivers.length == _amounts.length, "Receivers and amounts must have the same length");
-    require(_receivers.length > 0, "Receivers must not be empty");
-    require(_amounts.length > 0, "Amounts must not be empty");
+    require(_receivers.length == _amounts.length, "Receivers and amounts must have the same length.");
+    require(_receivers.length > 0, "Receivers must not be empty.");
+    require(_amounts.length > 0, "Amounts must not be empty.");
 
     _;
   }

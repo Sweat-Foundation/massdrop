@@ -66,6 +66,19 @@ describe("Distribute ERC20", async () => {
         expect(await token.read.balanceOf([bob.account.address])).to.equal(0n);
         expect(await token.read.balanceOf([owner.account.address])).to.equal(totalAmount);
     })
+
+    it("Should fail when number of receivers does not match the number of amounts", async () => {
+        const { distributor, token } = await networkHelpers.loadFixture(deployFixtures);
+
+        await viem.assertions.revertWith(
+            distributor.write.distributeERC20([
+                token.address,
+                [alice.account.address, bob.account.address],
+                [amountForAlice]
+            ]),
+            "Receivers and amounts must have the same length."
+        );
+    })
 });
 
 describe("Distribute native coins", async () => {
@@ -131,6 +144,21 @@ describe("Distribute native coins", async () => {
             ),
             distributor,
             "OwnableUnauthorizedAccount"
+        );
+    })
+
+    it("Should fail when number of receivers does not match the number of amounts", async () => {
+        const distributor = await networkHelpers.loadFixture(deployFixtures);
+
+        await viem.assertions.revertWith(
+            distributor.write.distributeNative(
+                [
+                    [alice.account.address, bob.account.address],
+                    [amountForAlice]
+                ],
+                { value: amountForAlice + amountForBob }
+            ),
+            "Receivers and amounts must have the same length."
         );
     })
 });
